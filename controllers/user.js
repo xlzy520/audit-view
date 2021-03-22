@@ -100,10 +100,12 @@ class UserController {
               overwrite: false  // 是否允许重写
             }
           )
+          const { address, algo, version, privateKey, publicKey, memberID } = user
           ctx.body = result({
             id: user.id,
             account: user.account,
-            token: token
+            token: token,
+            address, algo, version, privateKey, publicKey, memberID
           }, '登录成功')
         } else {
           ctx.body = result(null, '用户名或密码错误', false);
