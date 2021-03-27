@@ -37,17 +37,14 @@ app.use(views(__dirname + '/views', {
 logger
 app.use(async (ctx, next) => {
   await next().catch(err=>{
-    console.log(err.message);
     logger()
     if (err.message === 'jwt expired') {
-      console.log(666);
       ctx.body = {
         code: 401,
         msg: '登录过期，请重新登录',
         success: false
       }
     } else {
-      console.log(777);
       throw err;
     }
   })
@@ -55,7 +52,6 @@ app.use(async (ctx, next) => {
 
 app.use(async(ctx, next)=> {
   const token = ctx.cookies.get('netdisk-token');
-  console.log(token);
   if(!token){
     await next();
   }else{
@@ -75,7 +71,6 @@ app.use(async (ctx, next) => {
   return next().catch((err) => {
     if (err.status === 401) {
       ctx.status = 200;
-      console.log(5);
       ctx.body = {
         code: 401,
         msg: '登录过期或已失效，请重新登录',
